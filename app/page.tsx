@@ -10,27 +10,27 @@ export default function Home() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    // auth_codes 테이블의 모든 code 컬럼 데이터를 가져옴
+    // auth_codes 테이블에서 해당 code와 일치하는 row 조회 (id, code, name)
     const { data, error } = await supabase
       .from('auth_codes')
-      .select('code');
-  
+      .select('id, code, name')
+      .eq('code', code)
+      .maybeSingle();
+
     if (error) {
       console.error('Supabase error:', error);
       alert('서버 오류가 발생했습니다.');
       return;
     }
-  
-    // data가 배열 형태로 들어옴. 예: [{ code: 'aaa' }, { code: 'bbb' }, ... ]
-    const isValid = data?.some((row) => row.code === code);
-  
-    if (isValid) {
+
+    if (data) {
+      // 조회한 row를 localStorage에 저장 (나중에 alarm 페이지에서 사용)
+      localStorage.setItem('authData', JSON.stringify(data));
       router.push('/alarm');
     } else {
       alert('코드가 일치하지 않습니다.');
     }
   };
-  
 
   return (
     <div className={styles.container}>
