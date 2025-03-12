@@ -26,7 +26,7 @@ export default function AlarmPage() {
   const handleSave = async () => {
     if (!authData) return;
     // 예시: messages 테이블에 auth_id(외래키)와 message를 저장
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('messages')
       .insert([{ auth_id: authData.id, message }]);
 

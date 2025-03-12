@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../lib/supabaseClient';
 import styles from '../styles/Home.module.css';
+import Image from 'next/image';
 
 export default function Home() {
   const [code, setCode] = useState('');
@@ -35,7 +36,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <img src="/logo.png" alt="Logo" className={styles.logo} />
+
+      <Image src="/logo.png" alt="Logo" width={100} height={100} className={styles.logo} />
+
       </header>
       <main className={styles.main}>
         <h1 className={styles.title}>
